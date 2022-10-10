@@ -17,15 +17,29 @@ import './assets/styles/main.css'
 // CONTEXT \\
 import { AuthContextProvider } from './context/AuthContext'
 import ForgetPassword from './pages/ForgetPassword'
+import { ToastContainer } from 'react-toastify'
+import ApiTest from './pages/ApiTest'
 
 const root = ReactDOM.createRoot(document.getElementById('root'))
 
 root.render(
   <>
-    <Header />
+
     <AuthContextProvider>
       <React.StrictMode>
+        <ToastContainer
+          position="top-right"
+          autoClose={5000}
+          hideProgressBar={false}
+          newestOnTop={false}
+          closeOnClick
+          rtl={false}
+          pauseOnFocusLoss
+          pauseOnHover
+          theme="colored"
+        />
         <Router>
+        <Header />
           <Routes>
             <Route path="*" element={<NotFound />} />
             <Route exact path="/" element={<Home />} />
@@ -33,6 +47,7 @@ root.render(
             <Route path="signin" element={<SignIn />} />
             <Route path="forget-password" element={<ForgetPassword />} />
             <Route path="quiz" element={<ProtectedRoute><Quiz /></ProtectedRoute>} />
+            <Route path='api-test' element={<ProtectedRoute><ApiTest /></ProtectedRoute>} />
           </Routes>
         </Router>
       </React.StrictMode>

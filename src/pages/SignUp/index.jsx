@@ -2,6 +2,9 @@ import React, { useState, useRef } from 'react'
 import { Link } from 'react-router-dom'
 import { UserAuth } from '../../context/AuthContext'
 import { useNavigate } from "react-router-dom";
+// TOAST \\
+import { ToastContainer, toast } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.min.css';
 
 const SignUp = () => {
   const [email, setEmail] = useState('');
@@ -20,11 +23,23 @@ const SignUp = () => {
     }
   }
 
+  const notifyError = (error) => toast.error(error, {
+    position: "top-right",
+    autoClose: 5000,
+    hideProgressBar: false,
+    closeOnClick: true,
+    pauseOnHover: true,
+    draggable: true,
+    progress: undefined,
+    theme: "colored"
+  });
+
   const handleSubmit = async (e) => {
     e.preventDefault()
 
     if(inputs.current[1].value.length < 12) {
       setValidation("12 Character minimum")
+      notifyError("12 Character minimum")
       return
     }
 
@@ -32,15 +47,27 @@ const SignUp = () => {
 
     try {
       await createUser(email, password)
+      toast.success('Un email de vérification vous a été envoyé !', {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: false,
+        progress: undefined,
+        theme: "colored",
+      });
       setValidation("")
       navigate('/')
     } catch (e) {
       setError(e.message);
       if(e.code === "auth/invalid-email") {
         setValidation("Le format de votre email n'est pas valide !")
+        notifyError("Le format de votre email n'est pas valide !")
       }
       if(e.code === "auth/email-already-in-use") {
         setValidation("Email déjà utilisé !")
+        notifyError("Email déjà utilisé !")
       }
     }
   };

@@ -1,6 +1,9 @@
 import React, { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { UserAuth } from '../../context/AuthContext'
+// TOAST \\
+import { toast } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.min.css';
 
 const SignIn = () => {
   const [email, setEmail] = useState('')
@@ -12,6 +15,17 @@ const SignIn = () => {
 
   const [validation, setValidation] = useState("")
 
+  const notifyError = () => toast.error('Email ou mot de passe incorrect.', {
+    position: "top-right",
+    autoClose: 5000,
+    hideProgressBar: false,
+    closeOnClick: true,
+    pauseOnHover: true,
+    draggable: true,
+    progress: undefined,
+    theme: "colored"
+  });
+
   const handleSubmit = async (e) => {
     e.preventDefault()
     setError('')
@@ -22,6 +36,7 @@ const SignIn = () => {
       setError(e.message)
       if(e.code === "auth/wrong-password") {
         setValidation("Votre email ou mot de passe est incorrect !")
+        notifyError()
       }
     }
   }
