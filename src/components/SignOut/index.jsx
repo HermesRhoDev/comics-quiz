@@ -17,7 +17,7 @@ function SignOut() {
     }
 
     return (
-        <button onClick={handleLogout}>Se Déconnecter</button>
+        <button onClick={handleLogout} className='text-white text-lg font-semibold py-3 px-5 border border-white rounded-lg'>Se Déconnecter</button>
     )
 }
 

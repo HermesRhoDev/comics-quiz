@@ -3,8 +3,9 @@ import { Link } from 'react-router-dom'
 import { UserAuth } from '../../context/AuthContext'
 import { useNavigate } from "react-router-dom";
 // TOAST \\
-import { ToastContainer, toast } from 'react-toastify'
+import { toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.min.css';
+import { toastConfig } from '../../utils/ToastConfig/toastConfig';
 
 const SignUp = () => {
   const [email, setEmail] = useState('');
@@ -23,16 +24,7 @@ const SignUp = () => {
     }
   }
 
-  const notifyError = (error) => toast.error(error, {
-    position: "top-right",
-    autoClose: 5000,
-    hideProgressBar: false,
-    closeOnClick: true,
-    pauseOnHover: true,
-    draggable: true,
-    progress: undefined,
-    theme: "colored"
-  });
+  const notifyError = (error) => toast.error(error, {toastConfig});
 
   const handleSubmit = async (e) => {
     e.preventDefault()
@@ -47,16 +39,7 @@ const SignUp = () => {
 
     try {
       await createUser(email, password)
-      toast.success('Un email de vérification vous a été envoyé !', {
-        position: "top-right",
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: false,
-        progress: undefined,
-        theme: "colored",
-      });
+      toast.success('Votre compte a bien été créé :) Vous êtes dès à présent connecté !', {toastConfig});
       setValidation("")
       navigate('/')
     } catch (e) {
@@ -108,7 +91,7 @@ const SignUp = () => {
             type='password'
           />
         </div>
-        <p className='my-1 text-red-600'>{validation}</p>
+        {validation ? <p className='my-2 w-full bg-red-600 text-white font-semibold text-center py-3 text-xl'>{validation}</p> : null}
         <button className='border border-blue-500 bg-blue-600 hover:bg-blue-500 w-full p-4 my-2 text-white'>
           Sign Up
         </button>

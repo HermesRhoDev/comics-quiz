@@ -4,6 +4,7 @@ import { UserAuth } from '../../context/AuthContext'
 // TOAST \\
 import { toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.min.css';
+import { toastConfig } from '../../utils/ToastConfig/toastConfig';
 
 const SignIn = () => {
   const [email, setEmail] = useState('')
@@ -15,29 +16,26 @@ const SignIn = () => {
 
   const [validation, setValidation] = useState("")
 
-  const notifyError = () => toast.error('Email ou mot de passe incorrect.', {
-    position: "top-right",
-    autoClose: 5000,
-    hideProgressBar: false,
-    closeOnClick: true,
-    pauseOnHover: true,
-    draggable: true,
-    progress: undefined,
-    theme: "colored"
-  });
+  const notifyError = (errorNotification) => toast.error(errorNotification, {toastConfig});
 
   const handleSubmit = async (e) => {
     e.preventDefault()
     setError('')
     try {
       await signIn(email, password)
+      toast.success('Bienvenue !', {toastConfig})
       navigate('/')
     } catch (e) {
       setError(e.message)
       if(e.code === "auth/wrong-password") {
-        setValidation("Votre email ou mot de passe est incorrect !")
-        notifyError()
+        setValidation("Votre email ou mot de passe est incorrect.")
+        notifyError('Email ou mot de passe incorrect.')
       }
+      if(e.code === "auth/user-not-found") {
+        setValidation("Compte inexistant")
+        notifyError("Compte inexistant.")
+      }
+      console.dir(e)
     }
   }
 
@@ -67,11 +65,14 @@ const SignIn = () => {
         <label htmlFor="password" className='py-2 font-medium'>Password</label>
         <input onChange={(e) => setPassword(e.target.value)} className='border p-3' type="password" name="password" id="signup-password" />
       </div>
-      <p className='my-1 text-red-600'>{validation}</p>
+      {validation ? <p className='my-2 w-full bg-red-600 text-white font-semibold text-center py-3 text-xl'>{validation}</p> : null}
       <button className='border border-blue-500 bg-blue-600 hover:bg-blue-500 w-full p-4 my-2 text-white' type='submit'>
         Sign In
       </button>
     </form>
+    <div>
+      <Link to='/forget-password'>Mot de passe oublié ?</Link>
+    </div>
   </div>
   )
 }

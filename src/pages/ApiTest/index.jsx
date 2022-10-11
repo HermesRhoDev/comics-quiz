@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react'
 import axios from 'axios'
 
-const url = "http://gateway.marvel.com/v1/public/comics"
+const url = "http://gateway.marvel.com/v1/public/characters"
 const apiKey = import.meta.env.VITE_MARVEL_API_PUBLIC_KEY
 const ts = 1
-const hash = "64d5f5c1d3940753ccf44151f4d31ab2"
+const hash = import.meta.env.VITE_MARVEL_API_HASH
 
 const ApiTest = () => {
     const [get, setGet] = useState(null)

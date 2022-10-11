@@ -7,6 +7,7 @@ export const QuizContext = createContext();
 const Quiz = () => {
   const [gameState, setGameState] = useState("playing");
   const [score, setScore] = useState(0);
+  const [percentage, setPercentage] = useState(0);
 
   return (
       <QuizContext.Provider
@@ -14,7 +15,9 @@ const Quiz = () => {
           gameState,
           setGameState,
           score,
-          setScore
+          setScore,
+          percentage, 
+          setPercentage
         }}
       >
         {gameState === "playing" && <OfficialQuiz />}
