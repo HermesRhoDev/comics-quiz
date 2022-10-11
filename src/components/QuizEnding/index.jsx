@@ -21,21 +21,43 @@ const QuizEnding = () => {
         <div className='rounded-lg bg-white text-blue-400 py-2 px-5 font-medium'>Taux de réussite: {percentage}%</div>
         <div className='rounded-lg bg-white text-blue-400 py-2 px-5 font-medium'>{score} bonnes réponses sur {Questions[0].debutant.length}</div>
       </div>
-      <table>
-        <thead>
-          <tr>
-            <th>question</th>
-            <th>réponse</th>
-          </tr>
-        </thead>
-        <tbody>
-          {
+      <div class="flex flex-col">
+  <div class="overflow-x-auto sm:-mx-6 lg:-mx-8">
+    <div class="py-2 inline-block min-w-full sm:px-6 lg:px-8">
+      <div class="overflow-hidden">
+        <table class="min-w-full border text-center">
+          <thead class="border-b">
+            <tr>
+              <th scope="col" class="text-sm font-medium text-gray-900 px-6 py-4 border-r">
+                Question
+              </th>
+              <th scope="col" class="text-sm font-medium text-gray-900 px-6 py-4 border-r">
+                Réponse
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            {
             Questions[0].debutant.map((element) => (
-              <><td>{element.question}</td><td>{element.answer}</td></>
+              <>
+                <tr class="bg-white border-b">
+                  <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 border-r">
+                    {element.question}
+                  </td>
+                  <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap border-r">
+                    {element.answer}
+                  </td>
+                </tr>
+              </>
             ))
           }
-        </tbody>
-      </table>
+            
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
       <button onClick={restartQuiz} className='text-white font-medium border border-white py-2 px-5 rounded-lg'>Rejouer ?</button>
     </div>
   )

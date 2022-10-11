@@ -7,6 +7,7 @@ import { toastConfig } from '../../utils/ToastConfig/toastConfig';
 const OfficialQuiz = () => {
     const [currentQuestion, setCurrentQuestion] = useState(0)
     const [optionChosen, setOptionChosen] = useState("")
+    const [progress, setProgress] = useState(0)
 
     const { score, setScore, gameState, setGameState, percentage, setPercentage } = useContext(
         QuizContext
@@ -17,6 +18,7 @@ const OfficialQuiz = () => {
         toast.error('Veuillez sélectionner une réponse !')
       }else{ 
         setCurrentQuestion(currentQuestion + 1)
+        setProgress(progress + 10)
         toast.warning('Réponse enregistré !', toastConfig)
       }
       if(Questions[0].debutant[currentQuestion].answer === optionChosen) {
@@ -45,10 +47,11 @@ const OfficialQuiz = () => {
     return (
       <div className='w-full bg-blue-400 p-5 flex flex-col items-center'>
         <h1 className='text-3xl text-white font-semibold mb-5'>{questionTitle}</h1>
-        <div className='w-full flex flex-row justify-center gap-5 mb-5'>
+        <div className='w-full flex flex-row justify-center gap-5'>
           <div className='rounded-lg bg-white text-blue-400 py-2 px-5 font-medium'>Progression: {percentage}%</div>
           <div className='rounded-lg bg-white text-blue-400 py-2 px-5 font-medium'>{currentQuestion} / {Questions[0].debutant.length}</div>
         </div>
+        <div className="progress-bar my-5 bg-white text-transparent rounded-lg" style={ { width: `${progress}%` } }>0</div>
         <div className='w-full flex flex-col gap-5'>
           <div className='w-full flex flex-row gap-5 justify-center'>
             <button onClick={() => setOptionChosen(firstOption)} 
